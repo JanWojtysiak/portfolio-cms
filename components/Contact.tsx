@@ -1,6 +1,5 @@
 import EmailIcon from "@mui/icons-material/Email";
 import GitHubIcon from "@mui/icons-material/GitHub";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
@@ -34,22 +33,15 @@ export default function Contact() {
               startIcon={<EmailIcon />}
               sx={{ color: "primary.main" }}
             >
-              jan@example.com
+              wojtysiakjan@icloud.com
             </Button>
             <Stack direction="row" spacing={1}>
               <Button
-                href="https://github.com/"
+                href="https://github.com/JanWojtysiak"
                 color="inherit"
                 startIcon={<GitHubIcon />}
               >
                 GitHub
-              </Button>
-              <Button
-                href="https://www.linkedin.com/"
-                color="inherit"
-                startIcon={<LinkedInIcon />}
-              >
-                LinkedIn
               </Button>
             </Stack>
           </Stack>

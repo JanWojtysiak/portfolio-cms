@@ -9,13 +9,31 @@ import Container from "@mui/material/Container";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
-const projects = [
+const source = ["Open Source", "Closed Source"] as const;
+
+type Source = (typeof source)[number];
+
+const projects: {
+  title: string;
+  description: string;
+  tags: string[];
+  link: string;
+  source: Source;
+}[] = [
   {
-    title: "Sprawna wycena",
+    title: "SprawnaWycena",
     description:
-      "Strona typu mobile-first dla instalatorów z branży HVAC, która pomaga im w codziennej pracy.",
+      "Strona typu mobile-first dla instalatorów z branży HVAC, która pomaga im w pracy.",
     tags: ["React", "Node.js", "Typescript"],
-    link: "sprawnawycena.pl",
+    link: "https://sprawnawycena.pl",
+    source: source[1],
+  },
+  {
+    title: "Szachy",
+    description: "Gra w szachy z GUI i prostym AI",
+    tags: ["Python"],
+    link: "https://github.com/JanWojtysiak/Szachy",
+    source: source[0],
   },
 ];
 
@@ -43,9 +61,38 @@ export default function Projects() {
               sx={{ display: "flex", minHeight: 280, flexDirection: "column" }}
             >
               <CardContent sx={{ flexGrow: 1, p: 4 }}>
-                <Typography variant="h5" gutterBottom sx={{ fontWeight: 700 }}>
-                  {project.title}
-                </Typography>
+                <Stack
+                  direction="row"
+                  spacing={2}
+                  sx={{
+                    alignItems: "flex-start",
+                    justifyContent: "space-between",
+                    mb: 2,
+                  }}
+                >
+                  <Typography variant="h5" sx={{ fontWeight: 700 }}>
+                    {project.title}
+                  </Typography>
+                  <Chip
+                    label={project.source}
+                    size="small"
+                    sx={{
+                      flexShrink: 0,
+                      border: "1px solid",
+                      borderColor:
+                        project.source === source[0] ? "#22c55e" : "#ef4444",
+                      bgcolor:
+                        project.source === source[0] ? "#dcfce7" : "#fee2e2",
+                      color:
+                        project.source === source[0] ? "#166534" : "#991b1b",
+                      fontWeight: 700,
+                      boxShadow:
+                        project.source === source[0]
+                          ? "0 0 18px rgba(34, 197, 94, 0.45)"
+                          : "0 0 18px rgba(239, 68, 68, 0.4)",
+                    }}
+                  />
+                </Stack>
                 <Typography color="text.secondary" sx={{ mb: 3 }}>
                   {project.description}
                 </Typography>
@@ -56,7 +103,13 @@ export default function Projects() {
                 </Stack>
               </CardContent>
               <CardActions sx={{ px: 3, pb: 3 }}>
-                <Button endIcon={<ArrowOutwardIcon />}>Zobacz projekt</Button>
+                <Button
+                  href={project.link}
+                  target="_blank"
+                  endIcon={<ArrowOutwardIcon />}
+                >
+                  Zobacz projekt
+                </Button>
               </CardActions>
             </Card>
           ))}
