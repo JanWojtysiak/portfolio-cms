@@ -9,6 +9,7 @@ const links = [
   { label: "O mnie", href: "#o-mnie" },
   { label: "Projekty", href: "#projekty" },
   { label: "Kontakt", href: "#kontakt" },
+  { label: "Admin panel", href: "/admin/projects" },
 ];
 
 export default function Navbar() {

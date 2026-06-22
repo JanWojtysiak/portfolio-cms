@@ -1,0 +1,22 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum ProjectSource {
+  OPEN_SOURCE
+  CLOSED_SOURCE
+}
+
+model Project {
+  id          String        @id @default(cuid())
+  title       String
+  description String
+  tags        String[]      @default([])
+  link        String
+  source      ProjectSource
+}
