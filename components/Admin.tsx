@@ -128,8 +128,8 @@ export default function Admin() {
                 label="Typ źródła"
                 defaultValue=""
               >
-                <MenuItem value="Open Source">Open Source</MenuItem>
-                <MenuItem value="Closed Source">Closed Source</MenuItem>
+                <MenuItem value="OPEN_SOURCE">Open Source</MenuItem>
+                <MenuItem value="CLOSED_SOURCE">Closed Source</MenuItem>
               </Select>
             </FormControl>
 
