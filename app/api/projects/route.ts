@@ -56,3 +56,16 @@ export async function POST(request: Request) {
     );
   }
 }
+
+export async function GET() {
+  try {
+    const projects = await prisma.project.findMany();
+    return NextResponse.json(projects);
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json(
+      { message: "Nie udało sie pobrać projektów." },
+      { status: 500 },
+    );
+  }
+}
