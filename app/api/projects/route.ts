@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import prisma from "@/lib/prisma";
+import { isAdminAuthenticated } from "@/lib/session";
 
 const requiredText = z.string().trim().min(1);
 const projectSchema = z.object({
@@ -12,6 +13,13 @@ const projectSchema = z.object({
 });
 export async function POST(request: Request) {
   try {
+    if (!(await isAdminAuthenticated())) {
+      return NextResponse.json(
+        { message: "Brak autoryzacji." },
+        { status: 401 },
+      );
+    }
+
     let body: unknown;
     try {
       body = await request.json();
@@ -51,7 +59,7 @@ export async function POST(request: Request) {
     console.error(error);
 
     return NextResponse.json(
-      { message: "Nie udało się dodać projektu," },
+      { message: "Nie udało się dodać projektu." },
       { status: 500 },
     );
   }

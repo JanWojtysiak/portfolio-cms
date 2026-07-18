@@ -4,15 +4,21 @@ import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
+import { isAdminAuthenticated } from "@/lib/session";
 
-const links = [
-  { label: "O mnie", href: "#o-mnie" },
-  { label: "Projekty", href: "#projekty" },
-  { label: "Kontakt", href: "#kontakt" },
-  { label: "Admin panel", href: "/admin/projects" },
+const publicLinks = [
+  { label: "O mnie", href: "/#o-mnie" },
+  { label: "Projekty", href: "/#projekty" },
+  { label: "Kontakt", href: "/#kontakt" },
 ];
 
-export default function Navbar() {
+export default async function Navbar() {
+  const isAdmin = await isAdminAuthenticated();
+
+  const links = isAdmin
+    ? [...publicLinks, { label: "Admin panel", href: "/admin/projects" }]
+    : publicLinks;
+
   return (
     <AppBar
       position="sticky"
@@ -27,7 +33,7 @@ export default function Navbar() {
           <Typography
             variant="h6"
             component="a"
-            href="#start"
+            href="/#start"
             sx={{
               flexGrow: 1,
               color: "inherit",

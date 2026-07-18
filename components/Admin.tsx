@@ -1,6 +1,7 @@
 "use client";
 
 import { SubmitEvent, useState } from "react";
+import { useRouter } from "next/navigation";
 import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -19,11 +20,24 @@ type FormStatus =
   | { type: "success" | "error"; message: string };
 
 export default function Admin() {
+  const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
   const [status, setStatus] = useState<FormStatus>({
     type: "idle",
     message: "",
   });
+
+  async function handleLogout() {
+    setIsLoggingOut(true);
+    try {
+      await fetch("/api/auth/logout", { method: "POST" });
+      router.replace("/admin/login");
+      router.refresh();
+    } finally {
+      setIsLoggingOut(false);
+    }
+  }
 
   async function handleSubmit(event: SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -79,9 +93,27 @@ export default function Admin() {
 
   return (
     <Container maxWidth="sm" sx={{ py: 10 }}>
-      <Typography variant="overline" color="primary" sx={{ fontWeight: 700 }}>
-        Panel administratora
-      </Typography>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "flex-start",
+          justifyContent: "space-between",
+          gap: 2,
+          mb: 1,
+        }}
+      >
+        <Typography variant="overline" color="primary" sx={{ fontWeight: 700 }}>
+          Panel administratora
+        </Typography>
+        <Button
+          variant="outlined"
+          size="small"
+          onClick={handleLogout}
+          disabled={isLoggingOut}
+        >
+          {isLoggingOut ? "Wylogowywanie..." : "Wyloguj"}
+        </Button>
+      </Box>
       <Typography variant="h3" sx={{ mt: 1, mb: 1, fontWeight: 700 }}>
         Dodaj projekt
       </Typography>
